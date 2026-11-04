@@ -1,0 +1,56 @@
+/* Bottom navigation bar and the Calendar / Scripture screens. */
+
+:root { --wf-nav-h: 64px; }
+
+.bottom-nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+  background: var(--surface);
+  border-top: 1px solid var(--rule);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav-inner {
+  max-width: 680px; margin: 0 auto; height: var(--wf-nav-h);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.bottom-nav-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  border: none; background: none; cursor: pointer;
+  font-family: var(--sans); font-size: 11.5px; font-weight: 500;
+  color: var(--muted);
+}
+.bottom-nav-btn:hover { color: var(--ink); }
+.bottom-nav-btn.is-active { color: var(--blue); }
+
+/* Make room for the bar under everything else that sits at the bottom. */
+.composer-wrap { bottom: calc(var(--wf-nav-h) + env(safe-area-inset-bottom, 0px)); padding-bottom: 0; }
+.j-panel { bottom: calc(var(--wf-nav-h) + env(safe-area-inset-bottom, 0px)); }
+main { padding-bottom: calc(190px + var(--wf-nav-h)) !important; }
+
+/* Full screens (Calendar, Scripture) cover the chat between the top bar and the nav. */
+.screen-wrap {
+  position: fixed; left: 0; right: 0; z-index: 42;
+  top: var(--wf-topbar-h, 60px);
+  bottom: calc(var(--wf-nav-h) + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto; background: var(--ground);
+}
+.screen { max-width: 680px; margin: 0 auto; padding: 32px 24px 40px; }
+.screen-title { font-family: var(--serif); font-weight: 400; font-size: 30px; margin: 0 0 6px; letter-spacing: -0.01em; }
+.screen-lead { margin: 0 0 24px; color: var(--muted); font-size: 15px; }
+.screen-card {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 16px;
+  padding: 20px 22px; margin-top: 20px;
+}
+.screen-h { font-size: 15px; font-weight: 600; margin: 0 0 6px; }
+.screen-note { margin: 0; color: var(--muted); font-size: 14px; }
+.screen-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; padding: 14px;
+}
+.cal-dow { text-align: center; font-size: 11.5px; color: var(--faint); padding: 4px 0 8px; }
+.cal-day {
+  aspect-ratio: 1; display: grid; place-items: center;
+  font-size: 14px; border-radius: 10px; font-variant-numeric: tabular-nums;
+}
+.cal-day.is-today { background: var(--blue); color: #fff; font-weight: 600; }

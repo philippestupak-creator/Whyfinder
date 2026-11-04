@@ -16,6 +16,10 @@ import { useEffect, useRef, useState } from 'react';
 import type { Synthesis } from '../src/types/index.js';
 import { journalRequest, pickPassages } from '../src/engine/journalRequest.js';
 import './journal.css';
+import './nav.css';
+import { BottomNav, type Tab } from './components/BottomNav.js';
+import { CalendarScreen } from './components/CalendarScreen.js';
+import { ScriptureScreen } from './components/ScriptureScreen.js';
 
 type Answer = {
   body: string; kind: string; scripture: string[]; questionsToConsider: string[]; counsel: string[];
@@ -178,6 +182,8 @@ export default function Home() {
   const [restored, setRestored] = useState(false);
   const [journal, setJournal] = useState<Journal>(EMPTY_JOURNAL);
   const [panel, setPanel] = useState(false);
+  // Which full screen is open from the bottom bar (null = the chat).
+  const [view, setView] = useState<null | 'calendar' | 'scripture'>(null);
   const journalReady = useRef(false);
 
   useEffect(() => {
@@ -201,7 +207,7 @@ export default function Home() {
       if (typeof ResizeObserver !== 'undefined') { ro = new ResizeObserver(measure); ro.observe(bar); }
     }
     // Wide screens have room for the journal beside the conversation.
-    if (window.matchMedia('(min-width: 1280px)').matches) setPanel(true);
+    // (The journal now opens from the bottom bar instead of opening by itself on wide screens.)
     const saved = loadSaved();
     if (saved) {
       setState(saved.state);
@@ -460,6 +466,12 @@ export default function Home() {
     setBusy(false);
   }
 
+  // Bottom bar: Calendar and Scripture are full screens; Journal is the side panel.
+  function goTo(t: Tab) {
+    if (t === 'calendar' || t === 'scripture') { setPanel(false); setView(t); }
+    else { setView(null); setPanel(t === 'journal'); }
+  }
+
   return (
     <>
       <header className="topbar">
@@ -472,10 +484,6 @@ export default function Home() {
               if (window.confirm('Clear this conversation? Your journal stays on this device.')) startOver();
             }}>Clear chat</button>
           )}
-          <button className="crisis-link j-top" onClick={() => setPanel((o) => !o)} aria-expanded={panel}>
-            Journal{journal.items.length + journal.questions.length + journal.notes.length > 0
-              ? ` (${journal.items.length + journal.questions.length + journal.notes.length})` : ''}
-          </button>
           <button className="crisis-link" onClick={() => setSheet('crisis')}>
             Need to talk to someone now
           </button>
@@ -607,6 +615,10 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {view === 'calendar' && <div className="screen-wrap"><CalendarScreen /></div>}
+      {view === 'scripture' && <div className="screen-wrap"><ScriptureScreen /></div>}
+      <BottomNav active={view ?? (panel ? 'journal' : 'chat')} onChange={goTo} />
 
       {panel && (
         <JournalPanel
