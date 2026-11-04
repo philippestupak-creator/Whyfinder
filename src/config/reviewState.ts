@@ -12,7 +12,7 @@ export const REVIEW_STATE: ReviewState =
   (process.env.WHYFINDER_REVIEW_STATE as ReviewState) ?? 'DEMO';
 
 /** Hard expiry. Past this the build refuses to serve. */
-export const DEMO_EXPIRY = new Date('2026-10-09T23:59:59Z');
+export const DEMO_EXPIRY = new Date('2026-12-31T23:59:59Z');
 
 /** Retention past expiry before tester data is deleted (§3). */
 export const RETENTION_DAYS_PAST_EXPIRY = 30;
