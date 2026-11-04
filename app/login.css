@@ -1,0 +1,107 @@
+/* The sign-in page. Uses the colour and font tokens from globals.css. */
+
+.lg {
+  min-height: 100vh; min-height: 100dvh;
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  background: var(--ground);
+}
+
+/* ---------- left: the welcome side */
+.lg-hero {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 40px 56px;
+  background: linear-gradient(160deg, #EEF3FD 0%, #F7F4EC 70%, #FBF6E6 100%);
+  border-right: 1px solid var(--rule);
+}
+.lg-brand, .lg-hero-body, .lg-fine { position: relative; }
+.lg-brand { font-family: var(--sans); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); }
+.lg-brand span { color: var(--blue); }
+.lg-hero-body { position: relative; max-width: 460px; }
+.lg-path {
+  position: absolute; width: 400px; height: 400px; right: -130px; bottom: -130px;
+  stroke: #C9D7F4; stroke-width: 1;
+}
+.lg-path-line { stroke: var(--blue); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.lg-path-dot { fill: var(--yellow); stroke: none; }
+.lg-headline {
+  position: relative;
+  font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em;
+  font-size: clamp(38px, 4.4vw, 58px); line-height: 1.04; margin: 0 0 20px;
+}
+.lg-sub { position: relative; font-size: 17px; line-height: 1.55; color: var(--muted); margin: 0; max-width: 400px; }
+.lg-fine { font-size: 13px; color: var(--muted); max-width: 380px; margin: 0; }
+
+/* ---------- right: the form */
+.lg-panel {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 24px; gap: 20px;
+}
+.lg-card {
+  width: 100%; max-width: 400px;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 20px;
+  padding: 34px 32px 26px;
+  box-shadow: 0 1px 2px rgba(23,24,27,.04), 0 12px 32px rgba(23,24,27,.06);
+}
+.lg-brand-mobile { display: none; margin-bottom: 14px; }
+.lg-tagline-mobile {
+  display: none; margin: 0 0 32px;
+  font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em;
+  font-size: 38px; line-height: 1.05;
+}
+.lg-title { font-family: var(--serif); font-weight: 400; font-size: 28px; letter-spacing: -0.01em; margin: 0 0 6px; }
+.lg-lead { margin: 0 0 24px; color: var(--muted); font-size: 14.5px; }
+
+.lg-social { display: grid; gap: 10px; }
+.lg-btn {
+  width: 100%; height: 46px; border-radius: 12px; cursor: pointer;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  transition: background .15s, border-color .15s, transform .05s;
+}
+.lg-btn:active { transform: translateY(1px); }
+.lg-btn-dark { background: var(--ink); color: #fff; border: 1px solid var(--ink); }
+.lg-btn-dark:hover { background: #2B2D31; }
+.lg-btn-light { background: var(--surface); color: var(--ink); border: 1px solid var(--rule); }
+.lg-btn-light:hover { background: #F6F6F3; }
+.lg-btn-primary { background: var(--blue); color: #fff; border: 1px solid var(--blue); margin-top: 6px; }
+.lg-btn-primary:hover { background: #0E4AB8; }
+
+.lg-or {
+  display: flex; align-items: center; gap: 12px; margin: 22px 0 18px;
+  font-size: 12.5px; color: var(--faint);
+}
+.lg-or::before, .lg-or::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.lg-field { display: block; margin-bottom: 14px; }
+.lg-field span { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.lg-field input {
+  width: 100%; height: 44px; padding: 0 14px;
+  border: 1px solid var(--rule); border-radius: 10px; background: var(--surface);
+  font-family: var(--sans); font-size: 15px; color: var(--ink);
+  outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.lg-field input:focus { border-color: #9DB8EE; box-shadow: 0 0 0 3px var(--blue-soft); }
+
+.lg-error { margin: 0 0 10px; font-size: 13.5px; color: var(--red); }
+.lg-switch { text-align: center; margin: 20px 0 0; font-size: 14px; color: var(--muted); }
+.lg-switch button {
+  border: none; background: none; padding: 0; cursor: pointer;
+  font: inherit; font-weight: 600; color: var(--blue);
+}
+.lg-preview {
+  margin: 18px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: var(--yellow-soft); font-size: 12.5px; color: #6B5300; text-align: center;
+}
+.lg-help { font-size: 13px; color: var(--muted); margin: 0; text-align: center; }
+.lg-help a { color: var(--red); font-weight: 600; text-decoration: none; }
+
+/* ---------- phones and small tablets: one column, form first */
+@media (max-width: 860px) {
+  .lg { grid-template-columns: 1fr; }
+  .lg-hero { display: none; }
+  .lg-brand-mobile { display: block; }
+  .lg-tagline-mobile { display: block; }
+  .lg-title { font-size: 23px; }
+  .lg-panel { justify-content: flex-start; padding-top: 48px; }
+  .lg-card { border: none; box-shadow: none; padding: 0 4px; background: transparent; }
+}
